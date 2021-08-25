@@ -13,12 +13,12 @@ RSpec.describe Idea, type: :model do
     end
     context 'アイデア情報が保存できない場合' do
       it 'bodyカラムが空ではカテゴリー情報を保存できない' do
-        @idea.body = ""
+        @idea.body = ''
         @idea.valid?
         expect(@idea.errors.full_messages).to include("Body can't be blank")
       end
       it 'category_idカラムが空ではカテゴリー情報を保存できない' do
-        @idea.category_id = ""
+        @idea.category_id = ''
         @idea.valid?
         expect(@idea.errors.full_messages).to include("Category can't be blank")
       end

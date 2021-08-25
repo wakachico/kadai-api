@@ -13,7 +13,7 @@ RSpec.describe Category, type: :model do
     end
     context 'カテゴリー情報が保存できない場合' do
       it 'nameカラムが空ではカテゴリー情報を保存できない' do
-        @category.name = ""
+        @category.name = ''
         @category.valid?
         expect(@category.errors.full_messages).to include("Name can't be blank")
       end

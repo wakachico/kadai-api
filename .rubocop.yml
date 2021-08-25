@@ -1,5 +1,17 @@
 inherit_from: .rubocop_todo.yml
 
+# 自動生成されたファイルのため
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'
+
+# errorメッセージはダブルクォーテーションで統一するため
+Style/StringLiterals:
+  Exclude:
+    - 'spec/models/category_spec.rb'
+    - 'spec/models/idea_spec.rb'
+    - 'spec/rails_helper.rb'
+
 AllCops:
 # 除外するディレクトリ（自動生成されたファイル）
 # デフォルト設定にある"vendor/**/*"が無効化されないように記述

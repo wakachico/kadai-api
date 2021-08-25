@@ -1,27 +1,23 @@
 class IdeasController < ApplicationController
-  
   def index
     if Category.exists?(name: params[:category_name])
-      category = Category.find_by(name:params[:category_name])
+      category = Category.find_by(name: params[:category_name])
       ideas = Idea.where(category_id: category.id).includes(:category)
-      render json: { data: set_response(ideas) }
     else
       ideas = Idea.all.includes(:category)
-      render json: { data: set_response(ideas) }
     end
+    render json: { data: res(ideas) }
   end
 
   def create
     if params[:category_name].present? && params[:body].present?
-      if Category.exists?(name: params[:category_name])
-        category = Category.find_by(name: params[:category_name])
-        idea = Idea.create(idea_params(category.id))
-        render status: :created
-      else
-        category = Category.create(name: params[:category_name])
-        idea = Idea.create(idea_params(category.id))
-        render status: :created
-      end
+      category =  if Category.exists?(name: params[:category_name])
+                    Category.find_by(name: params[:category_name])
+                  else
+                    Category.create(name: params[:category_name])
+                  end
+      Idea.create(idea_params(category.id))
+      render status: :created
     else
       render status: :unprocessable_entity
     end
@@ -29,12 +25,10 @@ class IdeasController < ApplicationController
 
   private
 
-  def set_response(ideas)
-    require'time'
-    ideas_res = ideas.map do |idea| 
-      {id: idea.id, category: idea.category.name, body: idea.body, created_at: idea.created_at.to_i}
+  def res(ideas)
+    ideas.map do |idea|
+      { id: idea.id, category: idea.category.name, body: idea.body, created_at: idea.created_at.to_i }
     end
-    return ideas_res
   end
 
   def idea_params(id)

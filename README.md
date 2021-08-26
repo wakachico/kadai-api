@@ -1,24 +1,23 @@
-# README
+# テーブル定義
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## categories テーブル
+アイデアのカテゴリーを保存するテーブル
+| Column            | Type    | Options                   |
+| ----------------- | ------- | ------------------------- |
+| name              | string  | null: false, unique: true |
 
-Things you may want to cover:
+### Association
 
-* Ruby version
+- has_many :ideas
 
-* System dependencies
+## ideas テーブル 
+アイデアを保存するテーブル
 
-* Configuration
+| Column    | Type        | Options                         |
+| --------- | ----------- | ------------------------------- |
+| body      | text        | null: false                     |
+| category  | references  | null: false, foreign_key: true  |
 
-* Database creation
+### Association
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- belongs_to :category

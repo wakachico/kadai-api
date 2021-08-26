@@ -3,10 +3,13 @@ class IdeasController < ApplicationController
     if Category.exists?(name: params[:category_name])
       category = Category.find_by(name: params[:category_name])
       ideas = Idea.where(category_id: category.id).includes(:category)
-    else
+      render json: { data: res(ideas) }
+    elsif params[:category_name].empty?
       ideas = Idea.all.includes(:category)
+      render json: { data: res(ideas) }
+    else
+      render status: :not_found
     end
-    render json: { data: res(ideas) }
   end
 
   def create
